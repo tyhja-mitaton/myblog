@@ -1,0 +1,25 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'micro/style.css' %}">
+
+<div class="msg">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="{% url 'micro:send' %}" method="post">
+{% csrf_token %}
+<div><textarea name="post" maxlength="200" placeholder="Введите сообщение" required></textarea></div>
+<div><input type="submit" value="Отправить"></div>
+</form>
+</div>
+
+{% if posts_list %}
+    
+    {% for post in posts_list %}
+        <div class="post">
+		<span class="date">{{post.pub_date}}</span>
+		<span class="cont custom_text">{{ post.post_text }}</span>
+		</div>
+    {% endfor %}
+    
+{% else %}
+    <p>Сообщения отсуствуют</p>
+{% endif %}
